@@ -1,0 +1,98 @@
+@use "vars";
+
+@function str-split($string, $delimiter: '') {
+  @if type-of($string) != 'string' {
+    @error 'The argument $string: `#{$string}` is of incorrect type: `#{type-of($string)}`. Type of `String` is required!';
+  }
+
+  @if type-of($delimiter) != 'string' {
+    @error 'The argument $delimiter: `#{$delimiter}` is of incorrect type: `#{type-of($delimiter)}`. Type of `String` is required!';
+  }
+
+  $result: ();
+
+  @if str-length($delimiter) == 0 {
+    @for $i from 1 through str-length($string) {
+      $result: append($result, str-slice($string, $i, $i));
+    }
+
+    @return $result;
+  }
+
+  $index: str-index($string, $delimiter);
+
+  @while $index != null {
+    $item: str-slice($string, 1, $index - 1);
+    $result: append($result, $item);
+    $string: str-slice($string, $index + 1);
+    $index: str-index($string, $delimiter);
+  }
+
+  @return append($result, $string);
+}
+
+@function deep-map-check($map, $keys...) {
+  @if type-of($map) != 'map' {
+    @error 'The argument $map: `#{$map}` is of incorrect type: `#{type-of($map)}`. Type of `Map` is required!';
+  }
+
+  @each $key in $keys {
+    @if not map-has-key($map, $key) {
+      @return false;
+    }
+
+    $map: map-get($map, $key);
+  }
+
+  @return true;
+}
+
+@function deep-map-get($map, $keys...) {
+  @if type-of($map) != 'map' {
+    @error 'The argument $map: `#{$map}` is of incorrect type: `#{type-of($map)}`. Type of `Map` is required!';
+  }
+
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+
+  @return $map;
+}
+
+@function get($key, $map) {
+  $keys: str-split($key, '.');
+
+  @if not deep-map-check($map, $keys...) {
+    @error 'The argument $map: `#{$map}` doesn\'t has some of the $keys: `#{$keys}`!';
+  }
+
+  @return deep-map-get($map, $keys...);
+}
+
+@function font($key) {
+  @return get($key, vars.$fonts);
+}
+
+@function text($key) {
+  @return get($key, vars.$text);
+}
+
+@function size($key) {
+  @return get('size.#{$key}', vars.$text);
+}
+
+@function radius($key) {
+  @return get($key, vars.$radii);
+}
+
+@function space($key) {
+  @return get($key, vars.$spaces);
+}
+
+@function color($key) {
+  @return get($key, vars.$colors);
+}
+
+@function shadow($key) {
+  @return get($key, vars.$shadows);
+}

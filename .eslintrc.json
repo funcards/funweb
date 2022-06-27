@@ -1,0 +1,52 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/typescript",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:prettier/recommended",
+    "plugin:redux-saga/recommended"
+  ],
+  "plugins": ["import", "react", "react-hooks", "@typescript-eslint", "redux-saga"],
+  "rules": {
+    // Separate import groups with newline by section
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "unknown"],
+        "newlines-between": "always"
+      }
+    ],
+    "import/no-unresolved": "error",
+    "import/no-named-as-default-member": 0,
+    "no-console": 1, // Warning to reduce console logs used throughout app
+    "react/prop-types": 0, // Not using prop-types because we have TypeScript
+    "newline-before-return": 1,
+    "no-useless-return": 1,
+    "prefer-const": 1,
+    "no-unused-vars": 0,
+    "redux-saga/no-unhandled-errors": 0
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  }
+}

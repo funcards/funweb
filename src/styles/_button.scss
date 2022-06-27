@@ -1,0 +1,85 @@
+@use "fn";
+
+.button,
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  background-color: fn.color('sky.600');
+  border: .1rem solid fn.color('sky.600');
+  border-radius: .4rem;
+  color: fn.color('white');
+  cursor: pointer;
+  display: inline-block;
+  font-size: fn.size(md);
+  font-weight: 600;
+  height: fn.space(xl);
+  letter-spacing: .1rem;
+  line-height: fn.space(xl);
+  padding: 0 fn.space(lg);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  &:focus,
+  &:hover {
+    background-color: fn.color('sky.700');
+    border-color: fn.color('sky.700');
+    color: fn.color('white');
+    outline: 0;
+  }
+
+  &[disabled] {
+    color: #3f3f46;
+    background-color: #d4d4d8;
+    border-color: #d4d4d8;
+    cursor: default;
+
+    &:focus,
+    &:hover {
+      background-color: #d4d4d8;
+      border-color: #d4d4d8;
+    }
+  }
+
+  &.button-outline {
+    background-color: transparent;
+    color: fn.color('sky.600');
+
+    &:focus,
+    &:hover {
+      background-color: transparent;
+      border-color: fn.color('sky.700');
+      color: fn.color('sky.700');
+    }
+
+    &[disabled] {
+      &:focus,
+      &:hover {
+        border-color: inherit;
+        color: fn.color('sky.600');
+      }
+    }
+  }
+
+  &.button-clear {
+    background-color: transparent;
+    border-color: transparent;
+    color: fn.color('sky.600');
+
+    &:focus,
+    &:hover {
+      background-color: transparent;
+      border-color: transparent;
+      color: fn.color('sky.700');
+    }
+
+    &[disabled] {
+      &:focus,
+      &:hover {
+        color: fn.color('sky.600');
+      }
+    }
+  }
+}
